@@ -66,15 +66,25 @@ def get_titles_linebreak_sep(text):
             else:
                 s+=text[i]
                 i+=1
+                tmp.append(s)
+                s=None
                 break
-        ## reduce to line
-        if ((s=='\n') or i>=textlen) and (len(tmp)>0):
-            titles.append(' '.join(tmp))
-            tmp=[]
-        elif s=='\n':
-            continue
-        else:
+        if s is not None:
             tmp.append(s)
+
+    s=''
+    for segment in tmp:
+        if segment!='\n':
+            s= f'{s} {segment}'
+        else:
+            if s not in ['','\n']:
+                titles.append(s)
+                s=''
+            else:
+                s=''
+    if len(s)>0:
+        titles.append(s)
+
     return titles
 
 def raw_titles_to_plus_sep(titles):
