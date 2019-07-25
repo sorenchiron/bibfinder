@@ -102,7 +102,7 @@ def query_google_with_retry(plus_sep_title,retry_times=10):
     driver.get(url)
     sleep(0.1)
     text = driver.page_source
-    if len(re.findall("被引用次数",driver.page_source))==0:
+    if len(re.findall('class="gs_or_svg"',driver.page_source))==0:
         return None # no resutls found
 
     cite_button = driver.find_element_by_xpath("//a[@class='gs_or_cit gs_nph']//*[@class='gs_or_svg']")
